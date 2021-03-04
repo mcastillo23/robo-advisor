@@ -2,7 +2,12 @@
 
 import requests
 import json
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+
+API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
 symbol = input("Please input a sotck or cryptocurrency symbol.")
 
 if symbol.isalpha() == False or len(symbol) > 5:
