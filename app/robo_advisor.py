@@ -1,5 +1,7 @@
 # this is the "app/robo_advisor.py" file
 
+symbol = input("Please input a sotck or cryptocurrency symbol.")
+
 print("-------------------------")
 print("SELECTED SYMBOL: XYZ")
 print("-------------------------")
