@@ -52,7 +52,14 @@ with open(csv_file_path, "w") as csv_file:
             "close": time_series[date]["4. close"], 
             "volume": time_series[date]["5. volume"]
             })
-    
+
+
+recommendation = "Don't Buy"
+reason = "The stock's latest closing price is more than 30% above its recent low"
+
+if float(latest_close) < (1.3 * recent_low):
+    recommendation = "Buy"
+    reason = "The stock's latest closing price is less than 30% above its recent low"
 
 print("-------------------------")
 print(f"SELECTED SYMBOL: {symbol}")
@@ -65,8 +72,8 @@ print(f"LATEST CLOSE: {latest_close}")
 print(f"RECENT HIGH: {recent_high}")
 print(f"RECENT LOW: {recent_low}")
 print("-------------------------")
-print("RECOMMENDATION: BUY!")
-print("RECOMMENDATION REASON: TODO")
+print(f"RECOMMENDATION: {recommendation}!")
+print(f"RECOMMENDATION REASON: {reason}")
 print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
