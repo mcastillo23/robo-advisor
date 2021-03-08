@@ -11,6 +11,7 @@ from pandas import DataFrame
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+#Function to format output in USD
 def to_usd(my_price):
     return f"${my_price:,.2f}" 
 
@@ -19,6 +20,7 @@ load_dotenv()
 API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
 symbol = input("Please input a stock or cryptocurrency symbol.")
 
+#Validating ticker input
 if symbol.isalpha() == False or len(symbol) > 5:
     print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")
     exit()
@@ -36,6 +38,7 @@ parsed_response = json.loads(response.text)
 time_series = parsed_response["Time Series (Daily)"]
 dates = list(time_series.keys())
 
+#Reading the stock's prices into variables
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 latest_close = time_series[dates[0]]["4. close"]
 latest_close = time_series[dates[0]]["4. close"]
@@ -46,6 +49,7 @@ low_prices = [float(time_series[date]["3. low"]) for date in dates]
 recent_high = max(high_prices)
 recent_low = min(low_prices)
 
+#Creating a CSV file with past prices
 csv_file_path = os.path.join(os.path.dirname(__file__),"..", "data", "prices.csv") # a relative filepath
 
 with open(csv_file_path, "w") as csv_file: 
@@ -61,7 +65,7 @@ with open(csv_file_path, "w") as csv_file:
             "volume": time_series[date]["5. volume"]
             })
 
-
+#Recommendation algorithm
 recommendation = "Don't Buy"
 reason = "The stock's latest closing price is more than 30% above its recent low."
 
@@ -69,6 +73,7 @@ if float(latest_close) <= (1.3 * recent_low):
     recommendation = "Buy"
     reason = "The stock's latest closing price is less than or equal to 30% above its recent low."
 
+#Command-line output
 print("-------------------------")
 print(f"SELECTED SYMBOL: {symbol.upper()}")
 print("-------------------------")
@@ -86,6 +91,7 @@ print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
 
+#Creating a line plot of price over time
 prices_df = read_csv(csv_file_path)
 prices_df.sort_values(by="timestamp", ascending=True, inplace=True)
 
