@@ -6,6 +6,10 @@ import os
 from dotenv import load_dotenv
 import csv
 from datetime import datetime
+from pandas import read_csv
+from pandas import DataFrame
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 def to_usd(my_price):
     return f"${my_price:,.2f}" 
@@ -13,7 +17,7 @@ def to_usd(my_price):
 load_dotenv()
 
 API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
-symbol = input("Please input a sotck or cryptocurrency symbol.")
+symbol = input("Please input a stock or cryptocurrency symbol.")
 
 if symbol.isalpha() == False or len(symbol) > 5:
     print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")
@@ -82,4 +86,10 @@ print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
 
+prices_df = read_csv(csv_file_path)
+prices_df.sort_values(by="timestamp", ascending=True, inplace=True)
 
+price_plot = sns.lineplot(data = prices_df, x = "timestamp", y = "close")
+price_plot.set(xlabel ='Date', ylabel ='Closing Price($)', title = f'{symbol.upper()} Closing Price Over Time')
+plt.xticks(rotation = 45, ha = 'right', fontsize = 5)
+plt.show()
