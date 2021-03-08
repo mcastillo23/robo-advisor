@@ -7,6 +7,9 @@ from dotenv import load_dotenv
 import csv
 from datetime import datetime
 
+def to_usd(my_price):
+    return f"${my_price:,.2f}" 
+
 load_dotenv()
 
 API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
@@ -69,9 +72,9 @@ print("REQUESTING STOCK MARKET DATA...")
 print("REQUEST AT:", datetime.now().strftime("%Y-%m-%d %I:%M %p"))
 print("-------------------------")
 print(f"LATEST DAY: {last_refreshed}")
-print(f"LATEST CLOSE: {latest_close}")
-print(f"RECENT HIGH: {recent_high}")
-print(f"RECENT LOW: {recent_low}")
+print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
+print(f"RECENT HIGH: {to_usd(recent_high)}")
+print(f"RECENT LOW: {to_usd(recent_low)}")
 print("-------------------------")
 print(f"RECOMMENDATION: {recommendation}!")
 print(f"RECOMMENDATION REASON: {reason}")
