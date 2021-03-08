@@ -5,6 +5,7 @@ import json
 import os
 from dotenv import load_dotenv
 import csv
+from datetime import datetime
 
 load_dotenv()
 
@@ -55,17 +56,17 @@ with open(csv_file_path, "w") as csv_file:
 
 
 recommendation = "Don't Buy"
-reason = "The stock's latest closing price is more than 30% above its recent low"
+reason = "The stock's latest closing price is more than 30% above its recent low."
 
-if float(latest_close) < (1.3 * recent_low):
+if float(latest_close) <= (1.3 * recent_low):
     recommendation = "Buy"
-    reason = "The stock's latest closing price is less than 30% above its recent low"
+    reason = "The stock's latest closing price is less than or equal to 30% above its recent low."
 
 print("-------------------------")
-print(f"SELECTED SYMBOL: {symbol}")
+print(f"SELECTED SYMBOL: {symbol.upper()}")
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
-print("REQUEST AT: 2018-02-20 02:00pm")
+print("REQUEST AT:", datetime.now().strftime("%Y-%m-%d %I:%M %p"))
 print("-------------------------")
 print(f"LATEST DAY: {last_refreshed}")
 print(f"LATEST CLOSE: {latest_close}")
