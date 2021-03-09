@@ -33,6 +33,10 @@ if decision == "stock":
 
     response = requests.get(request_url)
 
+    if "Error Message" in response.text:
+        print("Sorry, couldn't find any trading data for that symbol.")
+        exit()
+
     parsed_response = json.loads(response.text)
 
     time_series = parsed_response["Time Series (Daily)"]
@@ -69,9 +73,14 @@ elif decision == "cryptocurrency":
     if symbol.isalpha() == False or len(symbol) > 5:
         print("Oh, expecting a properly-formed crypto symbol like 'BTC'. Please try again.")
         exit()
+
     request_url = f"https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol={symbol}&market=USD&apikey={API_KEY}"   
 
     response = requests.get(request_url) 
+
+    if "Error Message" in response.text:
+        print("Sorry, couldn't find any trading data for that symbol.")
+        exit()
 
     parsed_response = json.loads(response.text)
 
