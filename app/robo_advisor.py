@@ -116,11 +116,6 @@ else:
     print("Oh, expecting a the input as either 'stock' or 'cryptocurrency'. Please try again.")
     exit()
 
-
-if "Error Message" in response.text:
-    print("Sorry, couldn't find any trading data for that stock symbol.")
-    exit()
-
 #Recommendation algorithm
 recommendation = "Don't Buy"
 reason = "The latest closing price is more than 30% above its recent low."
